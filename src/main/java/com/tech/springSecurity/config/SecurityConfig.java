@@ -32,7 +32,7 @@ public class SecurityConfig {
     private RSAPrivateKey privateKey;
 
     @Bean
-    private SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())  // cada requisição deve ser autenticada
             .csrf(csrf -> csrf.disable())  // desabilita CSRF para simplificação, mas deve deixar ativado quando terminar o projeto

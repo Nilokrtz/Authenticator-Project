@@ -4,7 +4,6 @@ import java.time.Instant;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -14,9 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tech.springSecurity.controller.dto.LoginRequest;
 import com.tech.springSecurity.controller.dto.LoginResponse;
 import com.tech.springSecurity.repository.UserRepository;
-
-import jakarta.persistence.criteria.CriteriaBuilder.In;
-import lombok.extern.java.Log;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
