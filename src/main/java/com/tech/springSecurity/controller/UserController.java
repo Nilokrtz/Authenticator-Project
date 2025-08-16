@@ -10,15 +10,19 @@ import com.tech.springSecurity.repository.RoleRepository;
 import com.tech.springSecurity.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
+import lombok.experimental.var;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 @RestController
@@ -57,5 +61,13 @@ public class UserController {
 
         return ResponseEntity.ok().build(); // Retorna 200 OK se o usuário for criado com sucesso
     }
+
+    @GetMapping("/users")
+    @PreAuthorize("hasAuthority('SCOPE_ADMIN')") // Permite acesso se o usuário tiver o escopo 'admin'    
+    public ResponseEntity<List<User>> ListUsers() {
+        var users = userRepository.findAll();
+        return ResponseEntity.ok(users); // Retorna a lista de usuários
+    }
+    
     
 }

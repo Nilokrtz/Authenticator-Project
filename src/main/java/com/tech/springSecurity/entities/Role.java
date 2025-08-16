@@ -1,7 +1,5 @@
 package com.tech.springSecurity.entities;
 
-import java.util.prefs.BackingStoreException;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

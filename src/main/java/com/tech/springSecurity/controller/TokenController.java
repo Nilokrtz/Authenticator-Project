@@ -1,6 +1,7 @@
 package com.tech.springSecurity.controller;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tech.springSecurity.controller.dto.LoginRequest;
 import com.tech.springSecurity.controller.dto.LoginResponse;
+import com.tech.springSecurity.entities.Role;
 import com.tech.springSecurity.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,19 +47,23 @@ public class TokenController {
         var now = Instant.now();
         var expiresIn = 300L; 
 
+        var scopes= user.get().getRoles()
+        .stream()
+        .map(Role::getName)
+        .collect(Collectors.joining(" "));
+
         // Criando Token JWT
         var claims = JwtClaimsSet.builder()
                 .issuer("Nilokrtz") // Define o emissor do token
                 .subject(user.get().getId().toString()) // Define o assunto do token
                 .issuedAt(now) // Define a data de emissão do token
                 .expiresAt(now.plusSeconds(expiresIn)) // Define a data de expiração do token
+                .claim("scope", scopes)
                 .build();
         
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue(); // Codifica os claims para gerar o token JWT
 
         return ResponseEntity.ok(new LoginResponse(jwtValue,expiresIn));
     }
-    
-
     
 }
